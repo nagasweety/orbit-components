@@ -53,6 +53,7 @@ import typeof DeprecatedCardSectionType from "./_deprecated/Card/CardSection";
 import typeof DeprecatedCardContentType from "./_deprecated/Card/CardContent";
 import typeof mediaQueriesType from "./utils/mediaQuery";
 import typeof PortalType from "./Portal";
+import typeof PaginationType from "./Pagination";
 import typeof ModalType from "./Modal";
 import typeof ModalHeaderType from "./Modal/ModalHeader";
 import typeof ModalSectionType from "./Modal/ModalSection";
@@ -131,6 +132,7 @@ declare export var InputStepper: InputStepperType;
 declare export var TextLink: TextLinkType;
 declare export var Loading: LoadingType;
 
+declare export var Pagination: PaginationType;
 declare export var Radio: RadioType;
 declare export var RatingStars: RatingStarsType;
 declare export var Select: SelectType;
