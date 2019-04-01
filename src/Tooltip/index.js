@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 import defaultTheme from "../defaultTheme";
 import media from "../utils/mediaQuery";
@@ -57,6 +57,15 @@ const StyledTooltipChildren = styled.span`
 
 const StyledTooltip = styled.div`
   width: 100%;
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 `;
 
 const StyledTooltipWrapper = styled.div`
@@ -205,6 +214,17 @@ class Tooltip extends React.PureComponent<Props, State> {
     align: ALIGNS.CENTER,
     shown: false,
     shownMobile: false,
+    positions: {
+      containerTop: 0,
+      containerLeft: 0,
+      containerHeight: 0,
+      containerWidth: 0,
+      tooltipHeight: 0,
+      tooltipWidth: 0,
+      windowWidth: 0,
+      windowHeight: 0,
+      contentHeight: 0,
+    },
   };
 
   container: { current: any | HTMLDivElement } = React.createRef();
@@ -214,24 +234,6 @@ class Tooltip extends React.PureComponent<Props, State> {
   content: { current: any | HTMLDivElement } = React.createRef();
 
   overlay: { current: any | HTMLDivElement } = React.createRef();
-
-  containerTop: number = 0;
-
-  containerLeft: number = 0;
-
-  containerHeight: number = 0;
-
-  containerWidth: number = 0;
-
-  tooltipWidth: number = 0;
-
-  tooltipHeight: number = 0;
-
-  windowWidth: number = 0;
-
-  windowHeight: number = 0;
-
-  contentHeight: number = 0;
 
   // TODO: ged rid off weak types
   closeButton: { current: any } = React.createRef();
@@ -261,17 +263,22 @@ class Tooltip extends React.PureComponent<Props, State> {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      this.containerTop = containerTop;
-      this.containerLeft = containerLeft;
-      this.containerHeight = containerHeight;
-      this.containerWidth = containerWidth;
-      this.tooltipHeight = tooltipHeight;
-      this.tooltipWidth = tooltipWidth;
-      this.windowWidth = windowWidth;
-      this.windowHeight = windowHeight;
-
-      this.contentHeight =
+      const contentHeight =
         this.content.current && this.content.current.getBoundingClientRect().height;
+
+      this.setState({
+        positions: {
+          containerTop,
+          containerLeft,
+          containerHeight,
+          containerWidth,
+          tooltipHeight,
+          tooltipWidth,
+          windowWidth,
+          windowHeight,
+          contentHeight,
+        },
+      });
     }
   };
 
@@ -285,7 +292,7 @@ class Tooltip extends React.PureComponent<Props, State> {
       tooltipHeight,
       windowWidth,
       windowHeight,
-    } = this;
+    } = this.state.positions;
 
     const canBePositionLeft = containerLeft - tooltipWidth - TOOLTIP_ARROW_SIZE > 0;
     const canBePositionRight =
@@ -334,7 +341,7 @@ class Tooltip extends React.PureComponent<Props, State> {
       tooltipHeight,
       windowWidth,
       windowHeight,
-    } = this;
+    } = this.state.positions;
 
     const canBeVerticalStart =
       containerLeft + containerWidth / 2 - TOOLTIP_TOTAL_PADDING > 0 &&
@@ -398,16 +405,18 @@ class Tooltip extends React.PureComponent<Props, State> {
   };
 
   handleIn = () => {
-    const { preferredPosition } = this.props;
-    const positions = Object.keys(POSITIONS).map(k => POSITIONS[k]);
-    this.getDimensions();
-    if (preferredPosition) {
-      this.setPosition([preferredPosition, ...positions.filter(p => p !== preferredPosition)]);
-    } else {
-      this.setPosition(positions);
-    }
-    // https://github.com/facebook/flow/issues/2221
     this.setState({ shown: true });
+    setTimeout(() => {
+      const { preferredPosition } = this.props;
+      const positions = Object.keys(POSITIONS).map(k => POSITIONS[k]);
+      this.getDimensions();
+      if (preferredPosition) {
+        this.setPosition([preferredPosition, ...positions.filter(p => p !== preferredPosition)]);
+      } else {
+        this.setPosition(positions);
+      }
+      // https://github.com/facebook/flow/issues/2221
+    }, 15);
   };
 
   handleOut = () => {
@@ -415,10 +424,12 @@ class Tooltip extends React.PureComponent<Props, State> {
   };
 
   handleOpen = () => {
-    this.getDimensions();
-    if (this.windowWidth <= DEVICES_WIDTH.largeMobile) {
+    if (this.state.positions.windowWidth <= DEVICES_WIDTH.largeMobile) {
       this.setState({ shownMobile: true });
     }
+    setTimeout(() => {
+      this.getDimensions();
+    }, 15);
   };
 
   handleClose = (ev: SyntheticEvent<HTMLElement>) => {
@@ -445,7 +456,7 @@ class Tooltip extends React.PureComponent<Props, State> {
       tooltipHeight,
       tooltipWidth,
       contentHeight,
-    } = this;
+    } = this.state.positions;
 
     return (
       <React.Fragment>
@@ -459,40 +470,42 @@ class Tooltip extends React.PureComponent<Props, State> {
         >
           {children}
         </StyledTooltipChildren>
-        <Portal element="tooltips">
-          <StyledTooltip role="tooltip" data-test={dataTest}>
-            <StyledTooltipOverlay
-              onClick={this.handleClose}
-              shownMobile={shownMobile}
-              ref={this.overlay}
-            />
-            <StyledTooltipWrapper
-              shown={shown}
-              shownMobile={shownMobile}
-              position={position}
-              align={align}
-              size={size}
-              ref={this.tooltip}
-              onMouseEnter={this.handleIn}
-              onClick={this.handleClose}
-              onMouseLeave={this.handleOut}
-              containerTop={containerTop}
-              containerLeft={containerLeft}
-              containerHeight={containerHeight}
-              containerWidth={containerWidth}
-              tooltipHeight={tooltipHeight}
-              tooltipWidth={tooltipWidth}
-              contentHeight={contentHeight}
-            >
-              <StyledTooltipContent ref={this.content}>{content}</StyledTooltipContent>
-              <StyledTooltipClose>
-                <Button type="secondary" block onClick={this.handleClose} ref={this.closeButton}>
-                  {closeText}
-                </Button>
-              </StyledTooltipClose>
-            </StyledTooltipWrapper>
-          </StyledTooltip>
-        </Portal>
+        {shown && (
+          <Portal element="tooltips">
+            <StyledTooltip role="tooltip" data-test={dataTest}>
+              <StyledTooltipOverlay
+                onClick={this.handleClose}
+                shownMobile={shownMobile}
+                ref={this.overlay}
+              />
+              <StyledTooltipWrapper
+                shown={shown}
+                shownMobile={shownMobile}
+                position={position}
+                align={align}
+                size={size}
+                ref={this.tooltip}
+                onMouseEnter={this.handleIn}
+                onClick={this.handleClose}
+                onMouseLeave={this.handleOut}
+                containerTop={containerTop}
+                containerLeft={containerLeft}
+                containerHeight={containerHeight}
+                containerWidth={containerWidth}
+                tooltipHeight={tooltipHeight}
+                tooltipWidth={tooltipWidth}
+                contentHeight={contentHeight}
+              >
+                <StyledTooltipContent ref={this.content}>{content}</StyledTooltipContent>
+                <StyledTooltipClose>
+                  <Button type="secondary" block onClick={this.handleClose} ref={this.closeButton}>
+                    {closeText}
+                  </Button>
+                </StyledTooltipClose>
+              </StyledTooltipWrapper>
+            </StyledTooltip>
+          </Portal>
+        )}
       </React.Fragment>
     );
   }
