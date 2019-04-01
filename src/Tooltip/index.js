@@ -87,6 +87,7 @@ const StyledTooltipWrapper = styled.div`
   bottom: ${({ shownMobile, tooltipWidth }) => (shownMobile ? "0" : `-${tooltipWidth}px`)};
   left: 0;
   right: 0;
+  animation: ${fadeIn} ${({ theme }) => theme.orbit.durationFast} ease-out;
   
   img {
     max-width: 100%;
@@ -470,7 +471,7 @@ class Tooltip extends React.PureComponent<Props, State> {
         >
           {children}
         </StyledTooltipChildren>
-        {shown && (
+        {(shown || shownMobile) && (
           <Portal element="tooltips">
             <StyledTooltip role="tooltip" data-test={dataTest}>
               <StyledTooltipOverlay
