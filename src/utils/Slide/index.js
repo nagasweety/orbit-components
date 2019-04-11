@@ -13,7 +13,9 @@ const getMaxHeight = ({ maxHeight }) => {
 };
 
 export const StyledSlide = styled.div`
+  width: 100%;
   max-height: ${getMaxHeight};
+  ${({ expanded }) => !expanded && `overflow: hidden`};
   transition: max-height ${({ theme }) => theme.orbit.durationFast} linear;
 `;
 
@@ -26,10 +28,6 @@ class Slide extends React.Component<Props, State> {
     maxHeight: 0,
   };
 
-  expandTimeout = null;
-
-  collapseTimeout = null;
-
   componentDidMount() {
     this.setMaxHeight();
   }
@@ -38,16 +36,12 @@ class Slide extends React.Component<Props, State> {
     if (snapshot) {
       if (this.props.expanded) {
         this.setMaxHeight();
-        if (typeof setTimeout === "function") {
-          this.expandTimeout = setTimeout(this.expandCallback, 150);
-        }
+        this.expandTimeout = setTimeout(this.expandCallback, 150);
       } else {
         if (this.state.maxHeight !== this.props.maxHeight) {
           this.setMaxHeight();
         }
-        if (typeof setTimeout === "function") {
-          this.collapseTimeout = setTimeout(this.collapseCallback, 1);
-        }
+        this.collapseTimeout = setTimeout(this.collapseCallback, 1);
       }
     }
   }
@@ -87,11 +81,15 @@ class Slide extends React.Component<Props, State> {
     });
   };
 
+  expandTimeout: TimeoutID;
+
+  collapseTimeout: TimeoutID;
+
   render() {
     const { children, expanded = false } = this.props;
 
     return (
-      <StyledSlide maxHeight={this.state.maxHeight} expanded={expanded}>
+      <StyledSlide maxHeight={this.state.maxHeight} expanded={expanded} aria-hidden={expanded}>
         {children}
       </StyledSlide>
     );

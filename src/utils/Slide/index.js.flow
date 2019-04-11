@@ -2,12 +2,12 @@
 import { ReactComponentStyled } from "styled-components";
 
 export type State = {|
-  maxHeight: number | null
-|}
+  maxHeight: number | null,
+|};
 
 export type Props = {|
   +children: React$Node,
-  +maxHeight: number,
+  +maxHeight: number | null,
   +expanded?: boolean,
 |};
 

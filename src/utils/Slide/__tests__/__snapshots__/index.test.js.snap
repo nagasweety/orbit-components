@@ -2,6 +2,7 @@
 
 exports[`slide util should match snapshot 1`] = `
 <Slide__StyledSlide
+  aria-hidden={true}
   expanded={true}
   maxHeight={null}
   theme={
