@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { text, boolean, select } from "@storybook/addon-knobs";
+import { text, select } from "@storybook/addon-knobs";
 
 import * as Icons from "../icons";
 import { TYPE_OPTIONS } from "./consts";
@@ -55,6 +55,20 @@ storiesOf("Badge", module)
     },
   )
   .add(
+    "Info Inverted",
+    () => {
+      const content = text("Content", "Badge");
+      return (
+        <Badge type={TYPE_OPTIONS.INFO_INVERTED} icon={<Icons.Sightseeing />}>
+          {content}
+        </Badge>
+      );
+    },
+    {
+      info: "Check Orbit.Kiwi for more detailed design guidelines.",
+    },
+  )
+  .add(
     "Success",
     () => {
       const content = text("Content", "Badge");
@@ -97,6 +111,20 @@ storiesOf("Badge", module)
     },
   )
   .add(
+    "Critical Inverted",
+    () => {
+      const content = text("Content", "Badge");
+      return (
+        <Badge type={TYPE_OPTIONS.CRITICAL_INVERTED} icon={<Icons.Sightseeing />}>
+          {content}
+        </Badge>
+      );
+    },
+    {
+      info: "Check Orbit.Kiwi for more detailed design guidelines.",
+    },
+  )
+  .add(
     "Dark",
     () => {
       const content = text("Content", "Badge");
@@ -126,21 +154,6 @@ storiesOf("Badge", module)
       info: "Check Orbit.Kiwi for more detailed design guidelines.",
     },
   )
-  .add(
-    "Notification badge",
-    () => {
-      const content = text("Content", "3");
-      const type = select("Type", Object.values(TYPE_OPTIONS), TYPE_OPTIONS.NEUTRAL);
-      return (
-        <Badge type={type} circled>
-          {content}
-        </Badge>
-      );
-    },
-    {
-      info: "Check Orbit.Kiwi for more detailed design guidelines.",
-    },
-  )
   .add("Badge with translated node", () => (
     <Badge icon={<Icons.Airplane />}>
       <span>Content should </span>
@@ -153,12 +166,12 @@ storiesOf("Badge", module)
     () => {
       const content = text("Content", "Badge");
       const type = select("Type", Object.values(TYPE_OPTIONS), TYPE_OPTIONS.INFO);
-      const circled = boolean("Circled", false);
       const dataTest = text("dataTest", "test");
       const Icon = getIcon(getIcons("Airplane"));
+      const ariaLabel = text("ariaLabel", "test");
 
       return (
-        <Badge type={type} icon={Icon && <Icon />} dataTest={dataTest} circled={circled}>
+        <Badge type={type} icon={Icon && <Icon />} dataTest={dataTest} ariaLabel={ariaLabel}>
           {content}
         </Badge>
       );

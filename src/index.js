@@ -6,6 +6,7 @@ export { Icons };
 
 export { default as Alert } from "./Alert";
 export { default as Badge } from "./Badge";
+export { default as NotificationBadge } from "./NotificationBadge";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
@@ -15,12 +16,6 @@ export { default as Checkbox } from "./Checkbox";
 export { default as ChoiceGroup } from "./ChoiceGroup";
 export { default as CountryFlag } from "./CountryFlag";
 export { default as DestinationHeader } from "./DestinationHeader";
-
-// Deprecated Card
-export { default as DeprecatedCard } from "./_deprecated/Card";
-export { default as DeprecatedCardHeader } from "./_deprecated/Card/CardHeader";
-export { default as DeprecatedCardSection } from "./_deprecated/Card/CardSection";
-export { default as DeprecatedCardContent } from "./_deprecated/Card/CardContent";
 
 // Card
 export { default as Card } from "./Card";
@@ -63,6 +58,7 @@ export { default as InputGroup } from "./InputGroup";
 export { default as InputFile } from "./InputFile";
 export { default as InputStepper } from "./InputStepper";
 export { default as Illustration } from "./Illustration";
+export { default as Popover } from "./Popover";
 export { default as TextLink } from "./TextLink";
 export { default as Radio } from "./Radio";
 export { default as RatingStars } from "./RatingStars";
@@ -70,12 +66,15 @@ export { default as Select } from "./Select";
 export { default as Stack } from "./Stack";
 export { default as ServiceLogo } from "./ServiceLogo";
 export { default as Separator } from "./Separator";
+export { default as SkipNavigation } from "./SkipNavigation";
 export { default as Stepper } from "./Stepper";
 export { default as StopoverArrow } from "./StopoverArrow";
 export { default as Tag } from "./Tag";
 export { default as Textarea } from "./Textarea";
 export { default as Tile } from "./Tile";
 export { default as Tooltip } from "./Tooltip";
+export { default as Translate } from "./Translate";
+export { default as ThemeProvider } from "./ThemeProvider";
 
 export { default as TripSegment } from "./TripSegment";
 export { default as TripSector } from "./TripSector";
