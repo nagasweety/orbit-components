@@ -50,7 +50,7 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
 }
 
 .c0:focus {
-  box-shadow: 0 0 1px 1px #fff,0 0 1px 3px rgba(1,118,210,0.6);
+  box-shadow: 0 0 1px 1px #fff,0 0 1px 3px rgba(1,114,203,0.6);
 }
 
 .c0:focus:active {
@@ -75,7 +75,6 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
     component="button"
     dataTest="test"
     href="https://kiwi.com"
-    onMouseDown={[Function]}
     rel="noopener noreferrer"
     role="button"
     size="normal"
@@ -560,7 +559,7 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
           "componentStyle": ComponentStyle {
             "componentId": "ButtonLink__StyledButtonLink-sc-14jv5cl-1",
             "isStatic": false,
-            "lastClassName": "fGDkAz",
+            "lastClassName": "XdByb",
             "rules": Array [
               "font-family:",
               [Function],
@@ -1067,7 +1066,6 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
       }
       forwardedRef={null}
       href="https://kiwi.com"
-      onMouseDown={[Function]}
       rel="noopener noreferrer"
       role="button"
       size="normal"
@@ -1547,7 +1545,6 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
         component="button"
         dataTest="test"
         href="https://kiwi.com"
-        onMouseDown={[Function]}
         rel="noopener noreferrer"
         role="button"
         size="normal"
@@ -2025,7 +2022,6 @@ exports[`ButtonLink with Icon should match snapshot 1`] = `
           className="c0"
           data-test="test"
           href="https://kiwi.com"
-          onMouseDown={[Function]}
           rel="noopener noreferrer"
           role="button"
           size="normal"
@@ -2147,7 +2143,7 @@ exports[`ButtonLink with Icon should match snapshot 2`] = `
 }
 
 .c0:focus {
-  box-shadow: 0 0 1px 1px #fff,0 0 1px 3px rgba(1,118,210,0.6);
+  box-shadow: 0 0 1px 1px #fff,0 0 1px 3px rgba(1,114,203,0.6);
 }
 
 .c0:focus:active {
@@ -2170,7 +2166,6 @@ exports[`ButtonLink with Icon should match snapshot 2`] = `
     href="https://kiwi.com"
     iconLeft={<Airplane />}
     iconRight={<ChevronDown />}
-    onMouseDown={[Function]}
     onlyIcon={false}
     size="normal"
     sizeIcon="medium"
@@ -3159,7 +3154,6 @@ exports[`ButtonLink with Icon should match snapshot 2`] = `
       href="https://kiwi.com"
       iconLeft={<Airplane />}
       iconRight={<ChevronDown />}
-      onMouseDown={[Function]}
       onlyIcon={false}
       size="normal"
       sizeIcon="medium"
@@ -3636,7 +3630,6 @@ exports[`ButtonLink with Icon should match snapshot 2`] = `
         href="https://kiwi.com"
         iconLeft={<Airplane />}
         iconRight={<ChevronDown />}
-        onMouseDown={[Function]}
         onlyIcon={false}
         size="normal"
         sizeIcon="medium"
@@ -4110,7 +4103,6 @@ exports[`ButtonLink with Icon should match snapshot 2`] = `
           aria-label="With left and right icon"
           className="c0"
           href="https://kiwi.com"
-          onMouseDown={[Function]}
           size="normal"
         >
           <ButtonLink__IconContainer
